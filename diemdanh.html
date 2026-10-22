@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="vi"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Thông tin điểm danh</title>
+<style>
+:root{--ink:#1d2140;--navy:#1f2a52;--red:#c8372d;--line:#dde0ee}
+*{box-sizing:border-box}body{margin:0;font:16px/1.65 "Segoe UI",system-ui,sans-serif;background:#f3f4fa;color:var(--ink)}
+nav{position:sticky;top:0;background:var(--navy);display:flex;flex-wrap:wrap;gap:4px;padding:8px 14px}
+nav a{color:#fff;text-decoration:none;padding:7px 12px;border-radius:6px;font-weight:600}nav a:hover,nav a.on{background:var(--red)}
+main{max-width:640px;margin:24px auto;padding:0 14px}
+.box{background:#fff;border-radius:12px;padding:22px;box-shadow:0 2px 10px #1f2a5214}
+h1{margin:0 0 14px;color:var(--navy)}table{width:100%;border-collapse:collapse}
+td{padding:11px 8px;border-bottom:1px solid var(--line);vertical-align:top}td:first-child{font-weight:700;width:38%;color:var(--navy)}
+.fill{background:#fff3c4;padding:2px 8px;border-radius:4px}a{color:var(--red);word-break:break-all}
+</style></head><body>
+<nav><a href="index.html">Trang chủ</a><a href="lythuyet.html">Trả lời lý thuyết</a><a href="baitap23.html">Bài tập 23</a><a href="baitap22.html">Bài tập 22</a><a class="on" href="diemdanh.html">Thông tin điểm danh</a></nav>
+<main><div class="box"><h1>Thông tin điểm danh</h1>
+<table>
+<tr><td>Họ và tên</td><td><span class="fill">Lâm Gia Huy</span></td></tr>
+<tr><td>Mã số sinh viên</td><td><span class="fill">241A010392</span></td></tr>
+<tr><td>Lớp</td><td><span class="fill">Lập Trình Web</span></td></tr>
+<tr><td>Mã lớp học phần</td><td>261INT440701</td></tr>
+<tr><td>Email</td><td><span class="fill">HUY@241A010392.st.vhu.edu.vn</span></td></tr>
+<tr><td>Bài nộp</td><td>Đề thi kết thúc học phần "Lập trình Web" - Đề số 1</td></tr>
+<tr><td>URL (link deploy)</td><td id="u">https://github.com/GiaHuy-eng/lamgiahuy241a010392...git</td></tr>
+</table></div></main>
+<script>
+// Khi chạy trên Netlify, tự điền đúng link deploy của chính trang này
+if(/^https?:$/.test(location.protocol)){const a=document.createElement("a");a.href=a.textContent=location.origin+"/";document.getElementById("u").replaceChildren(a)}
+</script></body></html>

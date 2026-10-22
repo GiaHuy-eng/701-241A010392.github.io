@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="vi"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Trả lời lý thuyết - Lập trình Web</title>
+<style>
+:root{--ink:#1d2140;--navy:#1f2a52;--red:#c8372d;--gold:#f2b134;--line:#dde0ee}
+*{box-sizing:border-box}body{margin:0;font:16px/1.7 "Segoe UI",system-ui,sans-serif;background:#f3f4fa;color:var(--ink)}
+nav{position:sticky;top:0;z-index:5;background:var(--navy);display:flex;flex-wrap:wrap;gap:4px;padding:8px 14px}
+nav a{color:#fff;text-decoration:none;padding:7px 12px;border-radius:6px;font-weight:600}nav a:hover,nav a.on{background:var(--red)}
+main{max-width:860px;margin:0 auto;padding:20px 14px}h1{color:var(--navy)}
+section{background:#fff;border-radius:12px;padding:20px 22px;margin-bottom:20px;box-shadow:0 2px 10px #1f2a5214}
+h2{margin:0 0 8px;color:var(--navy)}h3{margin:16px 0 4px;font-size:1.02rem;color:var(--red)}
+pre{background:#1e1e2e;color:#f4ead2;padding:12px 14px;border-radius:8px;overflow-x:auto;font-size:.86rem;line-height:1.5}
+code{background:#eef1ff;padding:1px 5px;border-radius:4px}pre code{background:none;padding:0}
+.t{overflow-x:auto}table{border-collapse:collapse;width:100%;font-size:.92rem}td,th{border:1px solid var(--line);padding:7px 9px;text-align:left;vertical-align:top}th{background:#eef1ff}
+.demo{border:1.5px dashed var(--navy);border-radius:8px;padding:10px 14px;margin:8px 0}
+.demo ul{margin:0 0 8px;padding-left:20px}.demo li{cursor:pointer}.demo li.done{text-decoration:line-through;color:#888}
+.demo button{font:inherit;padding:6px 14px;border:0;border-radius:6px;background:var(--navy);color:#fff;cursor:pointer}
+</style></head><body>
+<nav><a href="index.html">Trang chủ</a><a class="on" href="lythuyet.html">Trả lời lý thuyết</a><a href="baitap23.html">Bài tập 23</a><a href="baitap22.html">Bài tập 22</a><a href="diemdanh.html">Thông tin điểm danh</a></nav>
+<main><h1>Phần 1: Trả lời lý thuyết</h1>
+
+<section><h2>Câu 1. position: absolute và position: relative</h2>
+<div class="t"><table><tr><th></th><th>relative</th><th>absolute</th></tr>
+<tr><td>Luồng trang</td><td>Vẫn nằm trong luồng, chỗ cũ được giữ</td><td>Bị rút khỏi luồng, không chiếm chỗ</td></tr>
+<tr><td>Tọa độ top/left...</td><td>Tính so với vị trí gốc của chính nó</td><td>Tính so với tổ tiên gần nhất có position khác static, nếu không có thì so với trang</td></tr>
+<tr><td>Vai trò thường gặp</td><td>Làm "mốc" cho phần tử con; dịch nhẹ phần tử</td><td>Đặt chi tiết nhỏ: huy hiệu, nút đóng, chú thích đè lên ảnh</td></tr></table></div>
+<h3>Tình huống và ví dụ responsive</h3>
+<p>Thẻ sản phẩm có huy hiệu "Mới" ở góc: thẻ là relative, huy hiệu là absolute nên luôn bám góc thẻ dù thẻ rộng hay hẹp. Phần bố cục lớn thì dùng Flexbox/Grid và media query:</p>
+<pre><code>.card{position:relative}
+.badge{position:absolute;top:8px;right:8px}
+.list{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:12px}
+@media (max-width:600px){.badge{font-size:.75rem}}</code></pre>
+<p>Không dùng absolute cho bố cục chính, vì phần tử bị rút khỏi luồng sẽ đè lên nhau khi màn hình hẹp.</p>
+<h3>Ảnh hưởng khi deploy</h3>
+<p>CSS do trình duyệt xử lý nên hosting không làm đổi cách position hoạt động. Điều cần kiểm tra sau khi deploy là hiển thị đúng trên nhiều thiết bị: có thẻ <code>&lt;meta name="viewport"&gt;</code>, hạn chế px cố định kết hợp absolute, và thử bằng chế độ thiết bị của DevTools cùng điện thoại thật.</p></section>
+
+<section><h2>Câu 2. Domain, hosting, DNS và deploy</h2>
+<h3>Quy trình</h3>
+<ol><li>Chọn và mua tên miền ở nhà đăng ký (PA Vietnam, Mắt Bão, Namecheap...).</li>
+<li>Đưa code (HTML/CSS/JS) lên dịch vụ hosting tĩnh.</li>
+<li>Vào trang quản lý domain, cấu hình DNS trỏ về hosting.</li>
+<li>Chờ DNS cập nhật (vài phút đến vài giờ), kiểm tra và bật HTTPS.</li></ol>
+<h3>Vai trò của DNS</h3>
+<p>DNS dịch tên miền dễ nhớ thành địa chỉ IP của máy chủ để trình duyệt biết kết nối tới đâu.</p>
+<div class="t"><table><tr><th>Bản ghi</th><th>Tác dụng</th></tr>
+<tr><td>A</td><td>Trỏ tên miền tới một địa chỉ IPv4</td></tr>
+<tr><td>CNAME</td><td>Trỏ tên miền phụ (www) sang một tên miền khác, ví dụ ten-site.netlify.app</td></tr>
+<tr><td>NS</td><td>Cho biết máy chủ DNS nào quản lý tên miền</td></tr>
+<tr><td>TTL</td><td>Thời gian bản ghi được lưu đệm, quyết định thay đổi lan ra nhanh hay chậm</td></tr></table></div>
+<h3>Công cụ deploy không cần server riêng</h3>
+<ul><li><b>Netlify:</b> kết nối repo GitHub, mỗi lần push tự động deploy, có HTTPS miễn phí và hỗ trợ gắn tên miền riêng.</li>
+<li><b>GitHub Pages:</b> bật Pages trong cài đặt repo, trang chạy ở địa chỉ username.github.io/ten-repo.</li></ul>
+<h3>Rủi ro bảo mật nếu cấu hình sai</h3>
+<ul><li>Không bật HTTPS: dữ liệu có thể bị nghe lén hoặc sửa trên đường truyền.</li>
+<li>Đẩy nhầm khóa API, mật khẩu lên repo công khai: bị lộ và lạm dụng.</li>
+<li>DNS trỏ sai hoặc bản ghi cũ còn sót: kẻ xấu có thể chiếm tên miền phụ (subdomain takeover).</li>
+<li>Tài khoản hosting/domain không bật xác thực 2 lớp, quên gia hạn: bị chiếm quyền hoặc mất tên miền.</li></ul></section>
+
+<section><h2>Câu 3. let, const và var</h2>
+<div class="t"><table><tr><th></th><th>var</th><th>let</th><th>const</th></tr>
+<tr><td>Scope</td><td>Phạm vi hàm</td><td>Phạm vi khối { }</td><td>Phạm vi khối { }</td></tr>
+<tr><td>Hoisting</td><td>Được đưa lên đầu, giá trị ban đầu là undefined</td><td>Có hoisting nhưng nằm trong "vùng chết tạm thời" (TDZ): dùng trước khai báo sẽ báo lỗi</td><td>Giống let</td></tr>
+<tr><td>Gán lại</td><td>Được</td><td>Được</td><td>Không (nhưng nội dung object/mảng vẫn sửa được)</td></tr></table></div>
+<pre><code>console.log(a); var a = 1;      // undefined
+console.log(b); let b = 2;      // ReferenceError: Cannot access 'b' before initialization
+const c = 3; c = 4;             // TypeError: Assignment to constant variable.</code></pre>
+<h3>Lỗi thường gặp</h3>
+<pre><code>for (var i = 0; i &lt; 3; i++) setTimeout(() =&gt; console.log(i), 100); // in 3 3 3
+for (let i = 0; i &lt; 3; i++) setTimeout(() =&gt; console.log(i), 100); // in 0 1 2</code></pre>
+<p>var chỉ có một biến i dùng chung cho cả vòng lặp, khi callback chạy thì i đã bằng 3. let tạo biến i mới cho mỗi vòng nên in đúng 0 1 2.</p>
+<h3>Debug bằng Chrome DevTools</h3>
+<ol><li>Nhấn F12, mở tab <b>Console</b> để đọc thông báo lỗi và dòng gây lỗi.</li>
+<li>Mở tab <b>Sources</b>, bấm vào số dòng nghi ngờ để đặt <b>breakpoint</b>, rồi tải lại trang.</li>
+<li>Khi chương trình dừng, xem giá trị biến ở mục <b>Scope</b> hoặc thêm biểu thức vào <b>Watch</b>.</li>
+<li>Dùng <b>Step over</b> (F10) chạy từng dòng để thấy giá trị i đổi ra sao, từ đó phát hiện biến dùng chung.</li></ol></section>
+
+<section><h2>Câu 4. Event Delegation</h2>
+<p>Là kỹ thuật gắn <b>một</b> trình nghe sự kiện lên phần tử cha thay vì gắn cho từng phần tử con. Nhờ event bubbling, sự kiện nổi từ con lên cha, và cha dùng <code>event.target</code> để biết con nào vừa được bấm.</p>
+<pre><code>const dl = document.getElementById("dl");
+dl.addEventListener("click", e =&gt; {
+  const li = e.target.closest("li");
+  if (li &amp;&amp; dl.contains(li)) li.classList.toggle("done");
+});
+// Thêm li mới bằng JS vẫn hoạt động, không cần gắn lại sự kiện</code></pre>
+<p><b>Thử ngay</b> (bấm vào việc để gạch bỏ, bấm nút để thêm việc mới):</p>
+<div class="demo"><ul id="dl"><li>Việc 1</li><li>Việc 2</li></ul><button id="add">Thêm việc</button></div>
+<h3>Lợi ích</h3>
+<ul><li><b>Hiệu suất:</b> danh sách 1000 mục chỉ cần 1 listener thay vì 1000, tiết kiệm bộ nhớ và thời gian khởi tạo.</li>
+<li><b>Danh sách động:</b> phần tử thêm sau tự có sự kiện, không cần gắn lại hay gỡ bỏ.</li>
+<li><b>Kết hợp HTML/CSS:</b> chỉ bật tắt class (như .done) rồi để CSS lo phần hiển thị; có thể dùng thuộc tính <code>data-*</code> trong HTML để biết phần tử nào được bấm.</li></ul>
+<h3>Lưu ý</h3>
+<p>Sự kiện không nổi bọt (như focus, blur) cần dùng focusin/focusout; nếu mã con gọi <code>stopPropagation()</code> thì cha sẽ không nhận được sự kiện.</p></section>
+</main>
+<script>
+const dl=document.getElementById("dl");let n=2;
+dl.addEventListener("click",e=>{const li=e.target.closest("li");if(li&&dl.contains(li))li.classList.toggle("done")});
+document.getElementById("add").addEventListener("click",()=>{const li=document.createElement("li");li.textContent="Việc "+(++n);dl.append(li)});
+</script></body></html>
